@@ -1,0 +1,84 @@
+@layout('layouts/app')
+  @section('content')
+      <div class="w-full mt-10 p-6">
+        <div class="flex flex-row items-center">
+            <div class="flex-1 text-right md:text-center">
+                <h5 class="font-bold uppercase text-gray-600">Solicitação de Crédito</h5>
+            </div>
+        </div>
+        <div class="mt-5 md:mt-0 md:col-span-2">
+          <form action="requestProposals" method="POST">
+            <div class="shadow overflow-hidden sm:rounded-md mt-5">
+              <div class="px-4 py-5 bg-white sm:p-6">
+                <div class="grid grid-cols-6 gap-6">
+                  <div class="col-span-1">
+                    <label for="amount" class="block text-sm font-medium text-gray-700">Valor</label>
+                    <input type="text" name="amount" id="amount" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                  </div>
+    
+                  <div class="col-span-1">
+                    <label for="number_of_installments" class="block text-sm font-medium text-gray-700">Número de Parcelas</label>
+                    <input type="number" min="1" max="10" name="number_of_installments" id="number_of_installments" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                  </div>
+                </div>
+              </div>
+              <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  Solicitar Propostas
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+        @if(proposals)
+        <table class="min-w-max w-full table-auto">
+                                <thead>
+                                    <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                                        <th class="py-3 px-6 text-left">Credor</th>
+                                        <th class="py-3 px-6 text-left">Valor</th>
+                                        <th class="py-3 px-6 text-center">Parcelas</th>
+                                        <th class="py-3 px-6 text-center">Número de parcelas</th>
+                                        <th class="py-3 px-6 text-center"></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-gray-600 text-sm font-light">
+                                  @each(prop in proposals)
+                                  <tr class="border-b border-gray-200 hover:bg-gray-100">
+                                    <td class="py-3 px-6 text-left whitespace-nowrap">
+                                        <div class="items-center">
+                                            <span class="font-medium">{{prop.institution.name}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-6 text-left">
+                                        <div class="items-center">
+                                            <span>{{prop.amount}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-6 text-center">
+                                        <div class="items-center">
+                                            <span>{{prop.installments}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-6 text-center">
+                                        <div class="items-center">
+                                            <span>{{prop.number_of_installments}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-6 text-center">
+                                        <div class="flex item-center justify-center">
+                                            <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                  @endeach
+                                </tbody>
+                            </table>
+        @endif
+      </div>
+      
+@endsection
